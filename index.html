@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>LogVision</title>
+    <!-- In a production build, Tailwind should be compiled with PostCSS, but keeping CDN for simplicity as requested -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              gray: {
+                850: '#1f2937',
+                950: '#0a0a0a',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      /* Custom scrollbar for better aesthetics */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: #0a0a0a; 
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #333; 
+        border-radius: 4px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #555; 
+      }
+
+      /* Dual slider CSS */
+      .dual-range::-webkit-slider-thumb {
+        pointer-events: auto;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        background: #3B82F6;
+        border-radius: 50%;
+        cursor: pointer;
+        box-shadow: 0 0 0 2px #0a0a0a;
+      }
+      .dual-range::-moz-range-thumb {
+        pointer-events: auto;
+        appearance: none;
+        width: 14px;
+        height: 14px;
+        background: #3B82F6;
+        border-radius: 50%;
+        cursor: pointer;
+        border: 2px solid #0a0a0a;
+      }
+      .dual-range:focus {
+        outline: none;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/",
+    "vite": "https://esm.sh/vite@^7.3.1",
+    "@vitejs/plugin-react": "https://esm.sh/@vitejs/plugin-react@^5.1.4"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body class="bg-gray-950 text-gray-200 antialiased h-screen w-screen overflow-hidden flex flex-col">
+    <div id="root" class="flex-1 flex flex-col h-full overflow-hidden"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

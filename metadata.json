@@ -1,0 +1,5 @@
+{
+  "name": "LogVision",
+  "description": "A powerful, dark-themed log visualizer for analyzing and filtering logcat files with support for multiple files and drag-and-drop.",
+  "requestFramePermissions": []
+}
