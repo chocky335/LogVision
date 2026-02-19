@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LogFile, FilterState, LogLevel } from '../types';
 import { ALL_LEVELS, LEVEL_COLORS, LEVEL_LABELS } from '../constants';
-import { FileIcon, XIcon, EyeIcon, EyeOffIcon, SearchIcon, ActivityIcon, UploadIcon, ChevronDownIcon, ChevronRightIcon, DownloadIcon, SparklesIcon } from './Icons';
+import { XIcon, EyeIcon, EyeOffIcon, SearchIcon, ActivityIcon, UploadIcon, ChevronDownIcon, ChevronRightIcon, DownloadIcon, SparklesIcon } from './Icons';
 
 interface SidebarProps {
   files: LogFile[];
