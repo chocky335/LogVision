@@ -1,7 +1,19 @@
-import React, { useState } from 'react';
-import { LogFile, FilterState, LogLevel } from '../types';
-import { ALL_LEVELS, LEVEL_COLORS, LEVEL_LABELS } from '../constants';
-import { XIcon, EyeIcon, EyeOffIcon, SearchIcon, ActivityIcon, UploadIcon, ChevronDownIcon, ChevronRightIcon, DownloadIcon, SparklesIcon } from './Icons';
+import React, { useState } from "react";
+import { LogFile, FilterState, LogLevel } from "../types";
+import { ALL_LEVELS, LEVEL_COLORS, LEVEL_LABELS } from "../constants";
+import {
+  XIcon,
+  EyeIcon,
+  EyeOffIcon,
+  SearchIcon,
+  ActivityIcon,
+  UploadIcon,
+  ChevronDownIcon,
+  ChevronRightIcon,
+  DownloadIcon,
+  SparklesIcon,
+  GithubIcon,
+} from "./Icons";
 
 interface SidebarProps {
   files: LogFile[];
@@ -28,12 +40,12 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onUpdateFilters,
   onFilesAdded,
   onExportLogs,
-  onCopyAIPrompt
+  onCopyAIPrompt,
 }) => {
   const [tokensExpanded, setTokensExpanded] = useState(false);
   const [anonymizeAI, setAnonymizeAI] = useState(true);
   const [customStrings, setCustomStrings] = useState<string[]>([]);
-  const [customInput, setCustomInput] = useState('');
+  const [customInput, setCustomInput] = useState("");
   const [isCopied, setIsCopied] = useState(false);
 
   const handleLevelToggle = (level: LogLevel) => {
@@ -65,7 +77,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
       onFilesAdded(e.target.files);
     }
     // Reset input so the same file can be selected again if removed
-    e.target.value = '';
+    e.target.value = "";
   };
 
   const formatTs = (ts: number) => {
@@ -78,8 +90,10 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
   const handleAddCustomString = () => {
     if (customInput.trim()) {
-      setCustomStrings(prev => Array.from(new Set([...prev, customInput.trim()])));
-      setCustomInput('');
+      setCustomStrings((prev) =>
+        Array.from(new Set([...prev, customInput.trim()])),
+      );
+      setCustomInput("");
     }
   };
 
@@ -92,21 +106,37 @@ export const Sidebar: React.FC<SidebarProps> = ({
   return (
     <div className="w-80 flex-none bg-gray-900 border-r border-gray-800 flex flex-col h-full overflow-hidden">
       {/* App Title */}
-      <div className="p-5 border-b border-gray-800 flex items-center gap-3">
-        <div className="p-2 bg-blue-500/20 text-blue-400 rounded-lg">
-          <ActivityIcon className="w-6 h-6" />
+      <div className="p-4 border-b border-gray-800 flex items-center justify-between">
+        <div className="flex items-center gap-3">
+          <div className="p-2 bg-blue-500/20 text-blue-400 rounded-lg">
+            <ActivityIcon className="w-5 h-5" />
+          </div>
+          <div>
+            <h1 className="text-lg font-bold tracking-tight text-white leading-tight">
+              LogVision
+            </h1>
+            <p className="text-[11px] text-gray-500 truncate w-40">
+              Cross-platform Log Analyzer
+            </p>
+          </div>
         </div>
-        <div>
-          <h1 className="text-xl font-bold tracking-tight text-white">LogVision</h1>
-          <p className="text-xs text-gray-500">Cross-platform Log Analyzer</p>
-        </div>
+        <a
+          href="https://github.com/chocky335/LogVision"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-gray-500 hover:text-white p-2 hover:bg-gray-800 rounded-lg transition-colors border border-transparent hover:border-gray-700"
+          title="View Source on GitHub"
+        >
+          <GithubIcon className="w-5 h-5" />
+        </a>
       </div>
 
       <div className="flex-1 overflow-y-auto p-5 space-y-8">
-        
         {/* Search */}
         <div className="space-y-3">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Search</h3>
+          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            Search
+          </h3>
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
               <SearchIcon className="w-4 h-4" />
@@ -125,55 +155,69 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {timeBounds && timeBounds.min !== timeBounds.max && (
           <div className="space-y-3">
             <div className="flex justify-between items-center">
-              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Time Range</h3>
+              <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+                Time Range
+              </h3>
               {filters.timeRange && (
-                <button 
-                  onClick={() => onUpdateFilters({ ...filters, timeRange: null })}
+                <button
+                  onClick={() =>
+                    onUpdateFilters({ ...filters, timeRange: null })
+                  }
                   className="text-xs text-blue-400 hover:text-blue-300 transition-colors"
                 >
                   Reset
                 </button>
               )}
             </div>
-            
+
             <div className="px-1 pt-2 pb-1">
               <div className="relative h-4 flex items-center">
                 <div className="absolute w-full h-1 bg-gray-700 rounded" />
-                <div 
-                  className="absolute h-1 bg-blue-500 rounded" 
-                  style={{ 
-                    left: `${(((filters.timeRange?.start ?? timeBounds.min) - timeBounds.min) / (timeBounds.max - timeBounds.min)) * 100}%`, 
-                    right: `${100 - (((filters.timeRange?.end ?? timeBounds.max) - timeBounds.min) / (timeBounds.max - timeBounds.min)) * 100}%` 
-                  }} 
+                <div
+                  className="absolute h-1 bg-blue-500 rounded"
+                  style={{
+                    left: `${(((filters.timeRange?.start ?? timeBounds.min) - timeBounds.min) / (timeBounds.max - timeBounds.min)) * 100}%`,
+                    right: `${100 - (((filters.timeRange?.end ?? timeBounds.max) - timeBounds.min) / (timeBounds.max - timeBounds.min)) * 100}%`,
+                  }}
                 />
-                <input 
-                  type="range" 
-                  min={timeBounds.min} 
-                  max={timeBounds.max} 
-                  value={filters.timeRange?.start ?? timeBounds.min} 
+                <input
+                  type="range"
+                  min={timeBounds.min}
+                  max={timeBounds.max}
+                  value={filters.timeRange?.start ?? timeBounds.min}
                   onChange={(e) => {
                     const val = Number(e.target.value);
                     const end = filters.timeRange?.end ?? timeBounds.max;
-                    onUpdateFilters({ ...filters, timeRange: { start: Math.min(val, end), end } });
-                  }} 
-                  className="dual-range absolute w-full appearance-none bg-transparent pointer-events-none" 
+                    onUpdateFilters({
+                      ...filters,
+                      timeRange: { start: Math.min(val, end), end },
+                    });
+                  }}
+                  className="dual-range absolute w-full appearance-none bg-transparent pointer-events-none"
                 />
-                <input 
-                  type="range" 
-                  min={timeBounds.min} 
-                  max={timeBounds.max} 
-                  value={filters.timeRange?.end ?? timeBounds.max} 
+                <input
+                  type="range"
+                  min={timeBounds.min}
+                  max={timeBounds.max}
+                  value={filters.timeRange?.end ?? timeBounds.max}
                   onChange={(e) => {
                     const val = Number(e.target.value);
                     const start = filters.timeRange?.start ?? timeBounds.min;
-                    onUpdateFilters({ ...filters, timeRange: { start, end: Math.max(val, start) } });
-                  }} 
-                  className="dual-range absolute w-full appearance-none bg-transparent pointer-events-none" 
+                    onUpdateFilters({
+                      ...filters,
+                      timeRange: { start, end: Math.max(val, start) },
+                    });
+                  }}
+                  className="dual-range absolute w-full appearance-none bg-transparent pointer-events-none"
                 />
               </div>
               <div className="flex justify-between text-[10px] text-gray-500 mt-2 font-mono whitespace-nowrap overflow-hidden">
-                <span className="truncate pr-1">{formatTs(filters.timeRange?.start ?? timeBounds.min)}</span>
-                <span className="truncate pl-1">{formatTs(filters.timeRange?.end ?? timeBounds.max)}</span>
+                <span className="truncate pr-1">
+                  {formatTs(filters.timeRange?.start ?? timeBounds.min)}
+                </span>
+                <span className="truncate pl-1">
+                  {formatTs(filters.timeRange?.end ?? timeBounds.max)}
+                </span>
               </div>
             </div>
           </div>
@@ -181,18 +225,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Log Levels */}
         <div className="space-y-3">
-          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Levels</h3>
+          <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+            Levels
+          </h3>
           <div className="grid grid-cols-2 gap-2">
-            {ALL_LEVELS.map(level => {
+            {ALL_LEVELS.map((level) => {
               const isActive = filters.levels.has(level);
               return (
                 <button
                   key={level}
                   onClick={() => handleLevelToggle(level)}
                   className={`flex items-center justify-center px-3 py-1.5 rounded text-sm font-medium transition-colors border ${
-                    isActive 
+                    isActive
                       ? LEVEL_COLORS[level]
-                      : 'bg-gray-800/50 border-gray-700 text-gray-500 hover:bg-gray-800 hover:text-gray-300'
+                      : "bg-gray-800/50 border-gray-700 text-gray-500 hover:bg-gray-800 hover:text-gray-300"
                   }`}
                 >
                   {LEVEL_LABELS[level]}
@@ -204,12 +250,16 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
         {/* Tags / Tokens */}
         <div className="space-y-3">
-          <div 
+          <div
             className="flex items-center justify-between cursor-pointer group select-none"
             onClick={() => setTokensExpanded(!tokensExpanded)}
           >
             <div className="flex items-center gap-1">
-              {tokensExpanded ? <ChevronDownIcon className="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" /> : <ChevronRightIcon className="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" />}
+              {tokensExpanded ? (
+                <ChevronDownIcon className="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" />
+              ) : (
+                <ChevronRightIcon className="w-4 h-4 text-gray-500 group-hover:text-gray-300 transition-colors" />
+              )}
               <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider group-hover:text-gray-300 transition-colors">
                 Tags / Tokens
               </h3>
@@ -226,15 +276,23 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {availableTokens.length === 0 ? (
                 <p className="text-xs text-gray-500 italic">No tags found.</p>
               ) : (
-                availableTokens.map(token => (
-                  <label key={token} className="flex items-center space-x-2 p-1.5 hover:bg-gray-800 rounded cursor-pointer transition-colors">
-                    <input 
-                      type="checkbox" 
-                      checked={filters.tokens.has(token)} 
-                      onChange={() => handleTokenToggle(token)} 
+                availableTokens.map((token) => (
+                  <label
+                    key={token}
+                    className="flex items-center space-x-2 p-1.5 hover:bg-gray-800 rounded cursor-pointer transition-colors"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={filters.tokens.has(token)}
+                      onChange={() => handleTokenToggle(token)}
                       className="rounded border-gray-600 text-blue-500 focus:ring-blue-500 bg-gray-900"
                     />
-                    <span className="text-sm text-gray-300 truncate" title={token}>{token}</span>
+                    <span
+                      className="text-sm text-gray-300 truncate"
+                      title={token}
+                    >
+                      {token}
+                    </span>
                   </label>
                 ))
               )}
@@ -245,33 +303,48 @@ export const Sidebar: React.FC<SidebarProps> = ({
         {/* Files */}
         <div className="space-y-3">
           <div className="flex items-center justify-between">
-            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">Loaded Files</h3>
-            <span className="bg-gray-800 text-gray-300 text-xs py-0.5 px-2 rounded-full">{files.length}</span>
+            <h3 className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
+              Loaded Files
+            </h3>
+            <span className="bg-gray-800 text-gray-300 text-xs py-0.5 px-2 rounded-full">
+              {files.length}
+            </span>
           </div>
-          
+
           <div className="space-y-2">
-            {files.map(file => (
-              <div 
-                key={file.id} 
+            {files.map((file) => (
+              <div
+                key={file.id}
                 className={`flex items-center justify-between p-2 rounded-md border ${
-                  file.visible ? 'bg-gray-800 border-gray-700' : 'bg-gray-900 border-gray-800 opacity-60'
+                  file.visible
+                    ? "bg-gray-800 border-gray-700"
+                    : "bg-gray-900 border-gray-800 opacity-60"
                 }`}
               >
                 <div className="flex items-center gap-3 overflow-hidden">
-                  <div className={`w-3 h-3 rounded-full flex-none ${file.color}`}></div>
-                  <div className="truncate text-sm font-medium" title={file.name}>
+                  <div
+                    className={`w-3 h-3 rounded-full flex-none ${file.color}`}
+                  ></div>
+                  <div
+                    className="truncate text-sm font-medium"
+                    title={file.name}
+                  >
                     {file.name}
                   </div>
                 </div>
                 <div className="flex items-center gap-1 ml-2 flex-none text-gray-400">
-                  <button 
+                  <button
                     onClick={() => onToggleFile(file.id)}
                     className="p-1 hover:text-white hover:bg-gray-700 rounded transition-colors"
                     title={file.visible ? "Hide logs" : "Show logs"}
                   >
-                    {file.visible ? <EyeIcon className="w-4 h-4" /> : <EyeOffIcon className="w-4 h-4" />}
+                    {file.visible ? (
+                      <EyeIcon className="w-4 h-4" />
+                    ) : (
+                      <EyeOffIcon className="w-4 h-4" />
+                    )}
                   </button>
-                  <button 
+                  <button
                     onClick={() => onRemoveFile(file.id)}
                     className="p-1 hover:text-red-400 hover:bg-gray-700 rounded transition-colors"
                     title="Remove file"
@@ -289,18 +362,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
             )}
           </div>
         </div>
-
       </div>
-      
+
       {/* Actions */}
       <div className="p-5 border-t border-gray-800 bg-gray-900/50 space-y-3">
         <label className="flex items-center justify-center w-full px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 cursor-pointer transition-colors">
           <UploadIcon className="w-4 h-4 mr-2" />
           Open Files...
-          <input 
-            type="file" 
-            multiple 
-            className="hidden" 
+          <input
+            type="file"
+            multiple
+            className="hidden"
             onChange={handleFileChange}
             accept=".txt,.log,text/plain"
           />
@@ -332,17 +404,17 @@ export const Sidebar: React.FC<SidebarProps> = ({
               {anonymizeAI && (
                 <div className="pl-6 space-y-2">
                   <div className="flex gap-1">
-                    <input 
+                    <input
                       type="text"
                       value={customInput}
-                      onChange={e => setCustomInput(e.target.value)}
-                      onKeyDown={e => {
-                        if (e.key === 'Enter') handleAddCustomString();
+                      onChange={(e) => setCustomInput(e.target.value)}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") handleAddCustomString();
                       }}
                       placeholder="Extra string to hide..."
                       className="flex-1 bg-gray-950 border border-gray-700 rounded px-2 py-1 text-[11px] text-gray-300 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none"
                     />
-                    <button 
+                    <button
                       onClick={handleAddCustomString}
                       className="bg-gray-800 border border-gray-700 rounded px-2 text-[11px] font-medium text-gray-300 hover:bg-gray-700 transition-colors"
                     >
@@ -351,11 +423,20 @@ export const Sidebar: React.FC<SidebarProps> = ({
                   </div>
                   {customStrings.length > 0 && (
                     <div className="flex flex-wrap gap-1.5 pt-1">
-                      {customStrings.map(s => (
-                        <span key={s} className="bg-indigo-900/40 border border-indigo-800/50 text-indigo-300 text-[10px] pl-1.5 pr-1 py-0.5 rounded flex items-center gap-1">
-                          <span className="truncate max-w-[120px]" title={s}>{s}</span>
-                          <button 
-                            onClick={() => setCustomStrings(prev => prev.filter(x => x !== s))} 
+                      {customStrings.map((s) => (
+                        <span
+                          key={s}
+                          className="bg-indigo-900/40 border border-indigo-800/50 text-indigo-300 text-[10px] pl-1.5 pr-1 py-0.5 rounded flex items-center gap-1"
+                        >
+                          <span className="truncate max-w-[120px]" title={s}>
+                            {s}
+                          </span>
+                          <button
+                            onClick={() =>
+                              setCustomStrings((prev) =>
+                                prev.filter((x) => x !== s),
+                              )
+                            }
                             className="hover:text-indigo-100 hover:bg-indigo-800/50 rounded p-0.5 transition-colors"
                           >
                             <XIcon className="w-3 h-3" />

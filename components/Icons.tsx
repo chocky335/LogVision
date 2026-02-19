@@ -284,3 +284,19 @@ export const SparklesIcon = ({ className = "w-6 h-6" }) => (
     <circle cx="12" cy="12" r="2" />
   </svg>
 );
+
+export const GithubIcon = ({ className = "w-6 h-6" }) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    className={className}
+  >
+    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.2c3-.3 6-1.5 6-8.5a6.2 6.2 0 0 0-1.7-4.4A6.5 6.5 0 0 0 18 2a6.5 6.5 0 0 0-4.3 1.9A14.2 14.2 0 0 0 12 3a14.2 14.2 0 0 0-1.7.1A6.5 6.5 0 0 0 6 2a6.5 6.5 0 0 0 .3 3.9A6.2 6.2 0 0 0 4.6 10.3c0 7 3 8.2 6 8.5a4.8 4.8 0 0 0-1 3.2v4" />
+    <path d="M10 20.5a5 5 0 0 1-5-2" />
+  </svg>
+);
